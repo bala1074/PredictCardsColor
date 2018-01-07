@@ -1,0 +1,182 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+</head>
+<body>
+</body>
+
+<script type="text/jsx">
+ let history=[];
+  // Define a `class`
+ class Step1 extends React.Component {
+
+  	constructor(props){
+  		super(props);
+  		history=[];
+  		this.state={
+  			noOfDecks:2,
+  			toatlCards:104,
+  			colorOne:'#FF0000',
+  			colorOneName:'red',
+  			colorTwo:'#000',
+  			colorTwoName:'black',
+  			colorThree:'#FFFFFF',
+  			colorThreeName:'ace',
+  			colorOneCards:48,
+  			colorTwoCards:48,
+  			colorThreeCards:8,
+  			submit:false,
+  			color1Came:0,
+  			color2Came:0,
+  			color3Came:0,
+  			confirm:false
+  			};
+  	}
+
+  	handleDeckChange(e){
+  		this.setState({noOfDecks:e.target.value});
+  		this.setState({toatlCards:(e.target.value)*52});
+  		this.setState({colorOneCards:(e.target.value)*24});
+  		this.setState({colorTwoCards:(e.target.value)*24});
+  		this.setState({colorThreeCards:(e.target.value)*4});
+  	}
+
+	handleColor1NameChange(e){
+  		this.setState({colorOneName:e.target.value});
+  	}
+
+  	handleColor1Change(e){
+  		this.setState({colorOne:e.target.value});
+  	}
+  	handleColor2NameChange(e){
+  		this.setState({colorTwoName:e.target.value});
+  	}
+
+  	handleColor2Change(e){
+  		this.setState({colorTwo:e.target.value});
+  	}
+
+  	handleColor3NameChange(e){
+  		this.setState({colorThreeName:e.target.value});
+  	}
+
+  	handleColor3Change(e){
+  		this.setState({colorThree:e.target.value});
+  	}
+
+  	handleColor1CardsChange(e){
+  		this.setState({toatlCards:parseInt(e.target.value)+parseInt(this.state.colorTwoCards)+parseInt(this.state.colorThreeCards)});
+  		this.setState({colorOneCards:(e.target.value)});
+  	}
+  	handleColor2CardsChange(e){
+  		this.setState({toatlCards:parseInt(e.target.value)+parseInt(this.state.colorOneCards)+parseInt(this.state.colorThreeCards)});
+  		this.setState({colorTwoCards:(e.target.value)});
+  	}
+	handleColor3CardsChange(e){
+  		this.setState({toatlCards:parseInt(e.target.value)+parseInt(this.state.colorOneCards)+parseInt(this.state.colorTwoCards)});
+  		this.setState({colorThreeCards:(e.target.value)});
+  	}
+  	handleSubmit(){
+		this.setState({submit:true});
+  	}
+  	handleReset(){
+		this.setState({
+  			noOfDecks:2,
+  			toatlCards:104,
+  			colorOne:'#FF0000',
+  			colorOneName:'red',
+  			colorTwo:'#000',
+  			colorTwoName:'black',
+  			colorThree:'#FFFFFF',
+  			colorThreeName:'ace',
+  			colorOneCards:48,
+  			colorTwoCards:48,
+  			colorThreeCards:8,
+  			submit:false,
+  			color1Came:0,
+  			color2Came:0,
+  			color3Came:0,
+  			confirm:false
+  			});
+  	}
+  	handleButtons(col){
+  		let bool=true;
+  		if(this.state.confirm)
+  			bool=confirm("Are you sure!!");
+  		if(bool)
+  		switch (col){
+  			case 'col1':
+  			this.setState({color1Came:this.state.color1Came+1});
+  			history=[<button style={{borderRadius:'50%',backgroundColor:`${this.state.colorOne}`,color:'white',textAlign:'center',textDecoration:'none',display:'inline-block',fontSize:'16px'}}>{this.state.colorOneName.charAt(0).toUpperCase()}</button>,...history];
+  			break;
+
+  			case 'col2':
+  			this.setState({color2Came:this.state.color2Came+1});
+  			history=[<button style={{borderRadius:'50%',backgroundColor:`${this.state.colorTwo}`,color:'white',textAlign:'center',textDecoration:'none',display:'inline-block',fontSize:'16px'}}>{this.state.colorTwoName.charAt(0).toUpperCase()}</button>,...history];
+  			break;
+
+  			case 'col3':
+  			this.setState({color3Came:this.state.color3Came+1});
+  			history=[<button style={{borderRadius:'50%',backgroundColor:`${this.state.colorThree}`,color:'white',textAlign:'center',textDecoration:'none',display:'inline-block',fontSize:'16px'}}>{this.state.colorThreeName.charAt(0).toUpperCase()}</button>,...history];
+  			break;
+  		}
+  	}
+  	handleConfirm(){
+		this.setState({confirm:!this.state.confirm});
+  	}
+    render() {
+     if(!this.state.submit)
+      return (<div>
+      	No.of decks<br/><input type='text' placeholder='number of decks : 2'  onChange={this.handleDeckChange.bind(this)} value={this.state.noOfDecks} />
+      	{this.state.toatlCards} cards
+      	<br/>
+      	Color1<br /><input type='text' placeholder='Color1 Name : red/dega..'  onChange={this.handleColor1NameChange.bind(this)} value={this.state.colorOneName}/>
+		<input type="color" value={this.state.colorOne} onChange={this.handleColor1Change.bind(this)} />
+		<input type='text' value={this.state.colorOneCards}  onChange={this.handleColor1CardsChange.bind(this)} />
+		<br/>
+		Color2<br />
+		<input type='text' placeholder='Color2 Name : black/kaaki..'  onChange={this.handleColor2NameChange.bind(this)} value={this.state.colorTwoName}/>
+		<input type="color" value={this.state.colorTwo} onChange={this.handleColor2Change.bind(this)} />
+		<input type='text' value={this.state.colorTwoCards}  onChange={this.handleColor2CardsChange.bind(this)} />
+		<br/>
+		Color3<br />
+		<input type='text' placeholder='Color3 Name : ace/nemali..'  onChange={this.handleColor3NameChange.bind(this)} value={this.state.colorThreeName}/>
+		<input type="color" value={this.state.colorThree} onChange={this.handleColor3Change.bind(this)} />
+		<input type='text' value={this.state.colorThreeCards}  onChange={this.handleColor3CardsChange.bind(this)} />
+		<br/>
+		<br/>
+		<input type='button' value='submit' onClick={this.handleSubmit.bind(this)}/>&nbsp;
+		<input type='button' value='reset' onClick={this.handleReset.bind(this)}/>
+      </div>);
+      return <div>
+      	<button onClick={this.handleButtons.bind(this,'col1')} style={{borderRadius:'50%',backgroundColor:`${this.state.colorOne}`,color:'white',textAlign:'center',textDecoration:'none',display:'inline-block',fontSize:'16px'}}>{this.state.colorOneName.charAt(0).toUpperCase()}</button>
+      	{this.state.colorOneName}&nbsp;
+      	{(((this.state.colorOneCards-this.state.color1Came)/(this.state.toatlCards-this.state.color1Came-this.state.color2Came-this.state.color3Came))*100).toFixed(2)}%  &nbsp;
+      	{this.state.colorOneCards-this.state.color1Came}
+      	<hr />
+      	<button onClick={this.handleButtons.bind(this,'col3')}  style={{borderRadius:'50%',backgroundColor:`${this.state.colorThree}`,color:'white',textAlign:'center',textDecoration:'none',display:'inline-block',fontSize:'16px'}}>{this.state.colorThreeName.charAt(0).toUpperCase()}</button>
+      	{this.state.colorThreeName}
+      	&nbsp;
+      	{(((this.state.colorThreeCards-this.state.color3Came)/(this.state.toatlCards-this.state.color1Came-this.state.color2Came-this.state.color3Came))*100).toFixed(2)}% &nbsp;
+      	{this.state.colorThreeCards-this.state.color3Came}
+      	<hr />
+      	<button onClick={this.handleButtons.bind(this,'col2')}  style={{borderRadius:'50%',backgroundColor:`${this.state.colorTwo}`,color:'white',textAlign:'center',textDecoration:'none',display:'inline-block',fontSize:'16px'}}>{this.state.colorTwoName.charAt(0).toUpperCase()}</button>
+		{this.state.colorTwoName}
+		&nbsp;
+      	{(((this.state.colorTwoCards-this.state.color2Came)/(this.state.toatlCards-this.state.color1Came-this.state.color2Came-this.state.color3Came))*100).toFixed(2)}% &nbsp;
+      	{this.state.colorTwoCards-this.state.color2Came}
+      	<hr />
+      	History<br/>{history}
+      	<br />
+      	<input type="button" value="re-confirm" onClick={this.handleConfirm.bind(this)} /><br />
+      	{this.state.confirm?'Everytime confirmation was enabled':'Everytime confirmation was diabled'}
+      </div>;
+    }
+  };
+
+  // React, please render this class
+  var element = React.createElement(Step1);
+
+  // React, after you render this class, please place it in my body tag
+  React.render(element, document.body);
+</script>
